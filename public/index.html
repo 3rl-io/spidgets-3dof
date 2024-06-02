@@ -1,0 +1,34 @@
+<script src="//cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+
+
+<s-room background="black">
+    <s-group camera scroll-swipe="headset" id="camera"></s-group>
+
+    <s-group rotation="-2 35 0">
+        <weather-widget position="0 0 -100"></weather-widget>
+
+        <s-div iframe-src="widgets/econ-calendar.html" position="0 -25 -100"
+            width="380" height="580" outer-class="tinted"></s-div>
+    </s-group>
+
+    <s-group rotation="-2 20 0">
+        <chart-widget position="0 0 -100" width="410" height="310" interval="5"></chart-widget>
+        <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
+        <chart-widget position="0 -34 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
+    </s-group>
+
+    <s-group rotation="-2 -5 0">
+        <s-div height="900" width="1100" iframe-src="//discord.com/app" zoom=".8" position="0 -12 -100"></s-div>
+    </s-group>
+
+
+    <s-group rotation="-2 -40 0">
+        <s-div height="700" width="900" iframe-src="//youtube.com/feed/subscriptions?theme=dark" zoom=".8" position="0 -12 -100"></s-div>
+    </s-group>
+</s-room>
+
+
+<script src="https://3rl.io/assets/general/scripts/spidgets-core.min.js?v=0.05"></script>
+<script src="widgets/chart-widget.js"></script>
+<script src="widgets/weather-widget.js"></script>

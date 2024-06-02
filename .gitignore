@@ -1,0 +1,13 @@
+/target
+/Cargo.lock
+
+# IntelliJ-IDEA
+*.iml
+.idea/
+.idea_modules/
+
+package-lock.json
+node_modules
+
+#Except:
+!/target/release/examples/euler_60
