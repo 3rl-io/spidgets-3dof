@@ -78,3 +78,7 @@ bun build ./ar-server.js --compile --outfile ar-server
 Customization and other UI features
 
 We would like to switch to using Monado's drivers since they work with many more glasses.
+
+### Credits
+
+This is heavily dependent on open source drivers made by Alex Badics and enhanced by U of Toronto team: https://github.com/hpvdt/ar-drivers-rs. See MIT License
