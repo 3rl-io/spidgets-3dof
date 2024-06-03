@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Blender Book';
+    src: url('fonts/Blender-Book.woff2') format('woff2'),url('fonts/Blender-Book.woff') format('woff');
+    font-weight: 400
+}
+
+body, body * {
+    font-family: 'Blender Book', Fallback, sans-serif;
+    font-weight: 400;
+}

@@ -8,6 +8,7 @@
 
 package-lock.json
 node_modules
+bun.lockb
 
 #Except:
 !/target/release/examples/euler_60
