@@ -1,18 +1,13 @@
 # spidgets-3dof
 
-Spatial widgets in a browser with 3 degrees of freedom. Works with Linux and one of these glasses:
+Spatial widgets in a browser with 3 degrees of freedom. Works with Linux or Mac, and one of these glasses:
 
-Confirmed:
 * Rokid Air, Max
-
-Pending testing:
 * XREAL Air, Air 2, and Air 2 Pro, Light
-* Grawoow G530 (a.k.a. Metavision M53)
-* Mad Gaze Glow
 
-This is a proof of concept and isn't very smooth to use yet. The content is all hardcoded. In progress, high priority:
+This is a proof of concept and the content is all hardcoded in `public/index.html`. In progress, high priority:
 
-- Windows and Mac compatibility
+- Windows compatibility
 - UX features like re-centering
 
 ## Usage
@@ -43,8 +38,7 @@ cargo update
 
 You will also need nodejs or Bun ([bun](https://bun.sh/docs/installation) is newer and faster)
 
-Optional: add the udev scripts to your udev config, so the glasses are available to regular
-users:
+Add the udev scripts to your udev config, so the glasses are available without sudo. You may need to restart the terminal after this:
 
 ```
 sudo cp udev/* /etc/udev/rules.d/
@@ -58,7 +52,7 @@ cargo build --release --example euler_60
 target/release/examples/euler_60
 ```
 
-Start ar-server.js with bun or node
+Start ar-server.js with bun or node. You may need `sudo` for the second step:
 
 ```
 bun install
@@ -67,6 +61,7 @@ bun ar-server.js
 
 then browse to http://localhost:8000
 
+### Deployment
 Create the main executable for end users:
 
 ```
