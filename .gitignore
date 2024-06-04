@@ -1,4 +1,3 @@
-/target
 /Cargo.lock
 
 # IntelliJ-IDEA
@@ -10,5 +9,9 @@ package-lock.json
 node_modules
 bun.lockb
 
-#Except:
-!/target/release/examples/euler_60
+/target/*
+!/target/release
+/target/release/*
+!/target/release/examples
+/target/release/examples/*.d
+/target/release/examples/euler_60-*
