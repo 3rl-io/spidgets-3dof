@@ -60,3 +60,8 @@ Create the main executable for end users:
 ```
 bun build ./ar-server.js --compile --outfile bin/ar-server
 ```
+
+### Performance tips
+
+- With Rokid glasses, use a 120Hz display mode (either 1920x1080 or x1200 is okay). 60Hz creates input lag
+- iframes of third party websites can be very GPU-expensive especially if they have a lot of divs. See `public/widgets` for ideas for building performant widgets. [HTML custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) are the cleanest pattern.
