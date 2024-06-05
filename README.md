@@ -1,62 +1,55 @@
-# spidgets-3dof
+# spidgets-3dof-example
 
-Spatial widgets in a browser with 3 degrees of freedom. Works with Linux or Mac, and one of these glasses:
+Example app for displaying spatial widgets in a browser with 3 degrees of freedom. Works with Linux or Mac, and one of these glasses:
 
 * Rokid Air, Max
 * XREAL Air, Air 2, and Air 2 Pro, Light
 
-This is a proof of concept and the content is all hardcoded in `public/index.html`. In progress, high priority:
+In progress, high priority:
 
 - Windows compatibility
-- UX features like re-centering
 
 ## Usage
 
-In some Linux environments you may be able to just run
+Clone this repo and run
 
-```./ar-server```
+```bin/ar-server```
 
 ... then browse to http://localhost:8000
 
-Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers
+Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
+
+Soon: When stable, we can host an easier download/install process on a CDN
 
 ### How it works:
 
-1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler anglers at 60Hz
+1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler anglers at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
-2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and TODO: inactivity/power save tracking
-3. Front-end in `public` directory uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
+2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
+3. Front-end in `public/index.html`(https://github.com/3rl-io/spidgets-3dof/blob/master/public/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
 
 ### Build and run manually
 
-Install dependencies rust and libudev.
+First make sure that euler angles from your glasses are printing to the console:
 
 ```
-sudo apt install cargo libudev-dev libstdc++-12-dev
-cargo update
+bin/euler_60
 ```
 
-You will also need nodejs or Bun ([bun](https://bun.sh/docs/installation) is newer and faster)
+Then get the webserver ready. Requires [nodejs](https://nodejs.org/en/download/package-manager) or [Bun](https://bun.sh/docs/installation) (Bun is newer and faster)
 
-Add the udev scripts to your udev config, so the glasses are available without sudo. You may need to restart the terminal after this:
-
-```
-sudo cp udev/* /etc/udev/rules.d/
-sudo udevadm control --reload
-```
-
-Make sure that euler angles are printing to console:
-
-```
-cargo build --release --example euler_60
-target/release/examples/euler_60
-```
-
-Start ar-server.js with bun or node. You may need `sudo` for the second step:
+Start ar-server.js. You may need `sudo` for the second step:
 
 ```
 bun install
 bun ar-server.js
+```
+
+or (if using nodejs)
+
+```
+npm install
+node ar-server.js
 ```
 
 then browse to http://localhost:8000
@@ -65,15 +58,5 @@ then browse to http://localhost:8000
 Create the main executable for end users:
 
 ```
-bun build ./ar-server.js --compile --outfile ar-server
+bun build ./ar-server.js --compile --outfile bin/ar-server
 ```
-
-### Long-term plans
-
-Customization and other UI features
-
-We would like to switch to using Monado's drivers since they work with many more glasses.
-
-### Credits
-
-This is heavily dependent on open source drivers made by Alex Badics and enhanced by U of Toronto team: https://github.com/hpvdt/ar-drivers-rs. See MIT License
