@@ -1,6 +1,6 @@
 const express = require('express'),
     http = require('http').Server(
-        express().use('/', express.static(__dirname + '/public'))
+        express().use('/', express.static('./public'))
     ),
     io = require('socket.io')(http);
 
