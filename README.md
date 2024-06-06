@@ -7,7 +7,7 @@ Example app for displaying spatial widgets in a browser with 3 degrees of freedo
 
 In progress, high priority:
 
-- Windows compatibility
+- Windows compatibility. Rokid Max is confirmed working on windows 11 x86. Waiting for confirmation on other hardware.
 
 ## Usage
 

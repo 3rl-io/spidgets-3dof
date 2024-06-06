@@ -30,7 +30,7 @@ io.on('connection', socket => {
 
 
 function _runCmd() {
-    return require('child_process').spawn('bin/euler_60', {shell: true});
+    return require('child_process').spawn('bin/euler_60', {shell: process.platform !== 'win32'});
 }
 
 (function _respawn(spawned) {
