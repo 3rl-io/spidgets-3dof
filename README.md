@@ -15,7 +15,9 @@ Clone this repo and run
 
 ```bin/ar-server```
 
-... then browse to http://localhost:8000
+Then browse to http://localhost:8000
+
+Note: this may require sudo on Linux/Mac. Copy the [udev rules here](https://github.com/3rl-io/headset-utils) to use with non-su.
 
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
@@ -64,4 +66,4 @@ bun build ./ar-server.js --compile --outfile bin/ar-server
 ### Performance tips
 
 - With Rokid glasses, use a 120Hz display mode (either 1920x1080 or x1200 is okay). 60Hz creates input lag
-- iframes of third party websites can be very GPU-expensive especially if they have a lot of divs. See `public/widgets` for ideas for building performant widgets. [HTML custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) are the cleanest pattern.
+- iframes of third party websites can be very GPU-intensive especially if they have a lot of divs. See `public/widgets` for ideas for building performant widgets. [HTML custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) are the cleanest pattern.
