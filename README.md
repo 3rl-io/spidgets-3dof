@@ -11,13 +11,11 @@ In progress, high priority:
 
 ## Usage
 
-Clone this repo and run
+1. Clone this repo and open it in a terminal
 
-```bin/ar-server```
+2. Run `bin/ar-server`. Linux/Mac may need to run `chmod u+x ./bin/ar-server` first to make it runnable and then use `sudo`, depending on settings.
 
-Then browse to http://localhost:8000
-
-Note: this may require sudo on Linux/Mac. Copy the [udev rules here](https://github.com/3rl-io/headset-utils) to use with non-su.
+3. Browse to http://localhost:8000
 
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
