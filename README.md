@@ -1,29 +1,35 @@
 # spidgets-3dof
 
-Example app for displaying spatial widgets in a browser with 3 degrees of freedom. Works with Linux or Mac, and one of these glasses:
+Example app for creating and displaying spatial widgets in a browser with 3 degrees of freedom
 
-* Rokid Air, Max
-* XREAL Air, Air 2, and Air 2 Pro, Light
+## System requirements
 
-In progress, high priority:
+- Linux or MacOS
+- One of these display glasses:
+  * Rokid Air, Max
+  * XREAL Air, Air 2, and Air 2 Pro, Light
+- A modern mobile processor (within past ~5 years) will give 30+ FPS. It's even confirmed working on Raspberry Pi and Intel N100
+- Note: Modern gaming GPUs can easily do 120-200 FPS, but this is currently throttled to 60 until the settings menu UX is figured out
 
-- Windows compatibility. Rokid Max is confirmed working on windows 11 x86. Waiting for confirmation on other hardware.
+Soon: Windows compatibility and ease-of-use. Rokid Max is confirmed working on windows 11 x86. Waiting for confirmation on other hardware.
 
 ## Usage
 
 1. Clone this repo and open it in a terminal
 
-2. Run `bin/ar-server`. Linux/Mac may need to run `chmod u+x ./bin/ar-server` first to make it runnable and then use `sudo`, depending on settings.
+2. Run `bin/ar-server`
 
 3. Browse to http://localhost:8000
 
+Linux/Mac: You probably need to run `chmod u+x ./bin/ar-server` first to make it runnable and then use `sudo ./bin/ar-server`. Follow the udev step [here](https://github.com/3rl-io/headset-utils?tab=readme-ov-file#build-and-run) for non-su
+
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
-Soon: When stable, we can host an easier download/install process on a CDN
+Soon: When stable, we can host an easier download/install process on a CDN + option to run in background on startup
 
 ### How it works:
 
-1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler anglers at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
+1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler anglers (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
 2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
 3. Front-end in [public/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/public/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
@@ -65,3 +71,4 @@ bun build ./ar-server.js --compile --outfile bin/ar-server
 
 - With Rokid glasses, use a 120Hz display mode (either 1920x1080 or x1200 is okay). 60Hz creates input lag
 - iframes of third party websites can be very GPU-intensive especially if they have a lot of divs. See `public/widgets` for ideas for building performant widgets. [HTML custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) are the cleanest pattern.
+- If you have a discrete GPU, you may want to change your OS settings to use it for the browser. Most browsers will use the iGPU by default
