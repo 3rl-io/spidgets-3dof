@@ -13,10 +13,10 @@ io().on('cam', function(data){
 
 
 const socket = io();
-window.glasses = {};
+window.headset = {};
 
 ['center', 'sphere', 'powersaver'].forEach(fn => {
-    glasses[fn] = data => {
+    headset[fn] = data => {
         socket.emit(fn, data);
     }
 })
