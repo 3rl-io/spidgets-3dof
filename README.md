@@ -1,12 +1,8 @@
 # spidgets-3dof
 
-Example app for creating and displaying spatial widgets in a browser with 3 degrees of freedom
+Example app for creating and displaying spatial widgets with 3 degrees of freedom and optionally SBS depth, in a browser. Build next-gen HUDs using 3RL's [declarative HTML.](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html)
 
-![spidgets-3dof gif](https://github.com/3rl-io/spidget-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true)
-
-Build next-gen HUDs using declarative HTML
-
-![spidgets-3dof promo banner](https://github.com/3rl-io/spidget-3dof/blob/master/docs/readme-assets/banner.png?raw=true)
+<img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" height="350"/>
 
 ## System requirements
 
@@ -93,3 +89,6 @@ bun build ./ar-server.js --compile --outfile bin/ar-server
 - With Rokid glasses, use a 120Hz display mode (either 1920x1080 or x1200 is okay). 60Hz creates input lag
 - iframes of third party websites can be very GPU-intensive especially if they have a lot of divs. See `webroot/widgets` for ideas for building performant widgets. [HTML custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) are the cleanest pattern.
 - If you have a discrete GPU, you may want to change your OS settings to use it for the browser. Most browsers will use the iGPU by default
+
+
+<img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/banner.png?raw=true" alt="spidgets-3dof promo banner" width="900"/>
