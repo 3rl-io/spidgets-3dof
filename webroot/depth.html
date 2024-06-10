@@ -1,0 +1,39 @@
+<script src="//cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+
+<body>
+<sbs-layer proximity="0">
+    <iframe height="100%" width="100%" src="//youtube.com/feed/subscriptions?theme=dark" allowfullscreen></iframe>
+</sbs-layer>
+
+<sbs-layer proximity="10">
+    <s-room background="transparent">
+        <s-group camera scroll-swipe="headset" id="camera"></s-group>
+
+        <s-group rotation="-2 48 0">
+            <weather-widget position="0 0 -100" outer-class="frosted"></weather-widget>
+
+            <s-div iframe-src="widgets/econ-calendar.html" position="0 -25 -100"
+                   width="380" height="580" outer-class="frosted"></s-div>
+        </s-group>
+
+        <s-group rotation="-2 35 0">
+            <chart-widget position="0 0 -100" width="410" height="310" interval="5" outer-class="tinted"></chart-widget>
+            <chart-widget position="0 -18 -100" width="410" height="310" interval="5" symbol="NVDA" outer-class="tinted"></chart-widget>
+            <chart-widget position="0 -36 -100" width="410" height="310" interval="5" symbol="TSLA" outer-class="tinted"></chart-widget>
+        </s-group>
+
+        <s-group rotation="-2 -38 0">
+            <s-div position="0 -15 -100" width="900" height="900" outer-class="tinted"
+                   iframe-src="//google.com" zoom=".9"></s-div>
+        </s-group>
+    </s-room>
+</sbs-layer>
+</body>
+
+
+<script src="https://3rl.io/assets/general/scripts/sbs.min.js?v=0.05"></script>
+<script src="https://3rl.io/assets/general/scripts/spidgets-core.min.js?v=0.06"></script>
+<script src="widgets/chart-widget.js"></script>
+<script src="widgets/weather-widget.js"></script>
+<link rel="stylesheet" href="main.css">

@@ -4,7 +4,46 @@
     font-weight: 400
 }
 
+body {
+    background-color: black;
+}
+
 body, body * {
     font-family: 'Blender Book', Fallback, sans-serif;
     font-weight: 400;
+}
+
+* {
+    scrollbar-width: auto;
+    scrollbar-color: rgba(0,5,10,.4) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,.4);
+    border-radius: 5px;
+}
+
+.tinted, .frosted {
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,.2);
+}
+
+.tinted {
+    background-color: rgba(0,5,10,.5);
+    color: rgba(255,255,255,.5);
+    padding: 10px;
+}
+
+.frosted {
+    background-color: rgba(240,240,240,.5);
+    color: rgba(255,255,255,.5);
 }
