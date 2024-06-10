@@ -2,6 +2,12 @@
 
 Example app for creating and displaying spatial widgets in a browser with 3 degrees of freedom
 
+![spidgets-3dof gif](https://github.com/3rl-io/spidget-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true)
+
+Build next-gen HUDs using declarative HTML
+
+![spidgets-3dof promo banner](https://github.com/3rl-io/spidget-3dof/blob/master/docs/readme-assets/banner.png?raw=true)
+
 ## System requirements
 
 - Linux or MacOS
@@ -43,7 +49,7 @@ Soon: When stable, we can host an easier download/install process on a CDN + opt
 
 ### How it works:
 
-1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler anglers (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
+1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
 2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
 3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
