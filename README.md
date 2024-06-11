@@ -8,20 +8,24 @@ Example app for creating and displaying spatial widgets with 3 degrees of freedo
 
 [Watch SBS example](https://youtu.be/97UgPYMgx9E) (3840x1080)
 
+---
 ## System requirements
 
-- Linux or MacOS
-- One of these display glasses:
-  * Rokid Air, Max
-  * XREAL Air, Air 2, and Air 2 Pro, Light
+### Compatibility
+|                                        | Windows | MacOS | Linux |
+|----------------------------------------|---------|-------|-------|
+| Rokid Air, Max                         | Yes     | Yes   | Yes   |
+| XREAL Light, Air, Air 2, and Air 2 Pro | No      | Yes   | Yes   |
+
+
+- Some Windows and Linux can use the included binaries. **MacOS should skip to the manual build**.
 - A modern laptop CPU (< 5 years old) can do 30+ FPS. It's even confirmed working on Raspberry Pi and Intel N100
 - Note: FPS is capped to 60 until the settings menu UX is figured out
 
-Soon: Windows compatibility and ease-of-use. Rokid Max is confirmed working on windows 11 x86. Waiting for confirmation on other hardware.
-
+---
 ## Usage
 
-### Linux/Mac
+### Linux
 
 1. Clone this repo and open it in a terminal
 
@@ -41,24 +45,23 @@ Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?ta
 
 3. Browse to http://localhost:8000
 
------
-
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
 Soon: When stable, we can host an easier download/install process on a CDN + option to run in background on startup
 
+---
 ## How it works:
 
 1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
 2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
+
 3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
 
 ---
-
 ## Build and run manually
 
-First make sure that euler angles from your glasses are printing to the console:
+See if the euler angles from your glasses are printing to the console. If not, build [headset-utils](https://github.com/3rl-io/headset-utils) and copy the new euler_60 file:
 
 ```
 bin/euler_60
@@ -87,11 +90,8 @@ Create the main executable for end users:
 
 ```
 bun build ./ar-server.js --compile --outfile bin/ar-server
-
 ```
-
 ---
-
 ### Performance tips
 
 - With Rokid glasses, use a 120Hz display mode (either 1920x1080 or x1200 is okay). 60Hz creates input lag
