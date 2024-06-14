@@ -67,11 +67,15 @@ Soon: When stable, we can host an easier download/install process on a CDN + opt
 ---
 ## Calibration:
 
-Calibration is a one-minute process that measures yaw drift rate and saves it to a file. This process will run automatically during first time setup. It can also be run manually like so:
+Calibration is a one-minute process that measures yaw drift rate and saves it for later. This process will run automatically during first time setup. It can also be run manually like so:
 
 `bin/ar-server --cal`
 
-The glasses should be placed upright on a flat stable surface for the full 60 seconds. If you usually use your glasses while reclined, it will be more accurate to wear them during the test. The measurement starts 5 seconds after the command to allow time to get comfortable. You can move freely during the test but should be in the same orientation at T+5 and T+60.
+The headset should be placed upright on a flat stable surface for the full 60 seconds. Afterwards the webserver will resume as usual.
+
+At this time we don't store config profiles per-device, so calibration will need to be re-run if multiple headsets are used
+
+Optional: If the headset is usually used at a different angle than upright (e.g. in a recliner), it would be more accurate to wear them during calibration. Measurement starts 5 seconds after the command to allow time to adjust. The user can move freely during the test but should be in the same orientation at T+5 and T+60.
 
 ---
 ## Build and run manually
