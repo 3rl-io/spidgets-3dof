@@ -31,9 +31,11 @@ Example app for creating and displaying spatial widgets with 3 degrees of freedo
 
 2. Run `chmod u+x ./bin/ar-server`
 
-3. Run `sudo ./bin/ar-server`
+3. Place the headset upright on a flat surface
 
-4. Browse to http://localhost:8000
+4. Run `sudo ./bin/ar-server` and wait for [calibration](#calibration) (first time setup)
+
+5. Browse to http://localhost:8000
 
 Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?tab=readme-ov-file#build-and-run) for non-su
 
@@ -41,15 +43,19 @@ Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?ta
 
 1. Clone this repo and open it in a terminal
 
-2. Run `bin/ar-server`
+2. Place the headset upright on a flat surface
 
-3. Browse to http://localhost:8000
+3. Run `bin/ar-server` and wait for [calibration](#calibration) (first time setup)
 
+4. Browse to http://localhost:8000
+
+---
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
 Soon: When stable, we can host an easier download/install process on a CDN + option to run in background on startup
 
 ---
+
 ## How it works:
 
 1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
@@ -57,6 +63,15 @@ Soon: When stable, we can host an easier download/install process on a CDN + opt
 2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
 
 3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
+
+---
+## Calibration:
+
+Calibration is a one-minute process that measures yaw drift rate and saves it to a file. This process will run automatically during first time setup. It can also be run manually like so:
+
+`bin/ar-server --cal`
+
+The glasses should be placed upright on a flat stable surface for the full 60 seconds. If you usually use your glasses while reclined, it will be more accurate to wear them during the test. The measurement starts 5 seconds after the command to allow time to get comfortable. You can move freely during the test but should be in the same orientation at T+5 and T+60.
 
 ---
 ## Build and run manually
