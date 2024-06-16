@@ -2,7 +2,7 @@
 
 Example app for running spatial widgets in a browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's [HTML library](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html)
 
-<img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" height="350"/>
+<img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" width="700"/>
 
 [Watch on Youtube](https://youtu.be/97UgPYMgx9E) (standard 1080)
 
