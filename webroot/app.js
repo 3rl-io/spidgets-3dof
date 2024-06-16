@@ -1,4 +1,4 @@
-let cameraRotation;
+let cameraRotation, lastX = 0, lastY = 0, skipCount = 0, totalCount = 0;
 
 io().on('cam', function(data){
     if (!cameraRotation) {
@@ -7,7 +7,20 @@ io().on('cam', function(data){
         cameraRotation && (cameraRotation.order = 'YXZ');
     }
     if (cameraRotation) {
-        cameraRotation.set(data[0], data[1], data[2]);
+        const newX = data[0], newY = data[1];
+        totalCount++;
+
+        if (Math.abs(newX - lastX) + Math.abs(newY - lastY) > .001) {
+            cameraRotation.set(lastX = newX, lastY = newY, data[2]);
+        } else {
+            skipCount++;
+            if (totalCount > 180) {
+                //TODO: inactivity/power save tracking
+                //console.log((skipCount*100/totalCount).toFixed(0));
+                totalCount = skipCount = 0;
+            }
+
+        }
     }
 });
 
