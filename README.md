@@ -1,6 +1,6 @@
 # spidgets-3dof
 
-Example app for creating and displaying spatial widgets with 3 degrees of freedom and optionally SBS depth, in a browser. Build next-gen HUDs using 3RL's [declarative HTML.](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html)
+Example app for running spatial widgets in a browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's [HTML library](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html)
 
 <img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" height="350"/>
 
@@ -14,16 +14,15 @@ Example app for creating and displaying spatial widgets with 3 degrees of freedo
 ### Compatibility
 |                                        | Windows | MacOS | Linux |
 |----------------------------------------|---------|-------|-------|
-| Rokid Air, Max                         | Yes     | Yes   | Yes   |
-| XREAL Light, Air, Air 2, and Air 2 Pro | No      | Yes   | Yes   |
+| Rokid Air, Max                         | ✅     | ✅   | ✅   |
+| XREAL Light, Air, Air 2, and Air 2 Pro | ❌      | ✅   | ✅   |
 
-
-- Some Windows and Linux can use the included binaries. **MacOS should skip to the manual build**.
 - A modern laptop CPU (< 5 years old) can do 30+ FPS. It's even confirmed working on Raspberry Pi and Intel N100
-- Note: FPS is capped to 60 until the settings menu UX is figured out
 
 ---
-## Usage
+## Installation
+
+Some Windows and Linux can use the included binaries as shown in this section. **MacOS should skip to the manual build**
 
 ### Linux
 
@@ -33,9 +32,7 @@ Example app for creating and displaying spatial widgets with 3 degrees of freedo
 
 3. Place the headset upright on a flat surface
 
-4. Run `sudo ./bin/ar-server` and wait for [calibration](#calibration) (first time setup)
-
-5. Browse to http://localhost:8000
+4. Run `sudo ./bin/ar-server` and wait for [calibration](#calibration)
 
 Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?tab=readme-ov-file#build-and-run) for non-su
 
@@ -47,8 +44,6 @@ Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?ta
 
 3. Run `bin/ar-server` and wait for [calibration](#calibration) (first time setup)
 
-4. Browse to http://localhost:8000
-
 ---
 Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
 
@@ -56,7 +51,17 @@ Soon: When stable, we can host an easier download/install process on a CDN + opt
 
 ---
 
-## How it works:
+## Usage
+
+Run `bin/ar-server` in a terminal
+
+Browse to http://localhost:8000
+
+Experiment with simple HUDs by editing `webroot/index.html`. Stay tuned for more interactive examples and docs.
+
+---
+
+## How it works
 
 1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
@@ -65,18 +70,22 @@ Soon: When stable, we can host an easier download/install process on a CDN + opt
 3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
 
 ---
-## Calibration:
+## Calibration
 
-Calibration is a one-minute process that measures yaw drift rate and saves it to a file. This process will run automatically during first time setup. It can also be run manually like so:
+Calibration is a one-minute process that measures yaw drift rate and saves it for later. This process will run automatically during first time setup. It can also be run manually like so:
 
 `bin/ar-server --cal`
 
-The glasses should be placed upright on a flat stable surface for the full 60 seconds. If you usually use your glasses while reclined, it will be more accurate to wear them during the test. The measurement starts 5 seconds after the command to allow time to get comfortable. You can move freely during the test but should be in the same orientation at T+5 and T+60.
+The headset should be placed upright on a flat stable surface for the full 60 seconds. Console messages will indicate when the process is complete and the UI is ready.
+
+At this time we don't store config profiles per-headset, so calibration will need to be re-run if multiple headsets are used
+
+Optional: If the headset is usually used at a different angle than upright (e.g. in a recliner), it would be more accurate to wear it during calibration. Measurement starts 5 seconds after the command to allow time to adjust. The user can move freely during the test but should be in roughly the same orientation at T+5 and T+60.
 
 ---
 ## Build and run manually
 
-See if the euler angles from your glasses are printing to the console. If not, build [headset-utils](https://github.com/3rl-io/headset-utils) and copy the new euler_60 file:
+See if the euler angles from your glasses are printing to the console by running the below command. If not, build [headset-utils](https://github.com/3rl-io/headset-utils) and copy the new euler_60 binary to the same location.
 
 ```
 bin/euler_60
