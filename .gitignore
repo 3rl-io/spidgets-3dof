@@ -1,4 +1,5 @@
 drift
+webroot/fps-test/data.json
 
 # IntelliJ-IDEA
 *.iml
