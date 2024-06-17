@@ -4,7 +4,9 @@ Alpine.store('app', {
     os: '&nbsp;',
     compatWith: '&nbsp;',
     compatColor: 'lime',
+    stressLoaded: false,
     stress: 0,
+    playing: true,
     open(url) {
         window.open(url, '_blank')
     }
@@ -48,8 +50,10 @@ fetch('data.json')
         let counter = 0;
 
         setInterval(() => {
-            setCamera(data[counter % count])
-            counter++
+            if (store.playing) {
+                setCamera(data[counter % count])
+                counter++
+            }
         }, 16);
 
         let frames = 0;

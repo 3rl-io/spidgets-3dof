@@ -1,6 +1,6 @@
 # spidgets-3dof
 
-Example app and hardware drivers for AR in a browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's [HTML library](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html)
+Example app and hardware drivers for AR in a browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's HTML library
 
 <img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" width="700"/>
 
@@ -59,7 +59,7 @@ Run `bin/ar-server` in a terminal
 
 Browse to http://localhost:8000
 
-Experiment with simple HUDs by editing `webroot/index.html`. Stay tuned for more interactive examples and docs.
+Experiment with simple HUDs by editing [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html). Stay tuned for more interactive examples and docs.
 
 Options:
 - Change port with the `--port` flag e.g. `bin/ar-server --port 3000`

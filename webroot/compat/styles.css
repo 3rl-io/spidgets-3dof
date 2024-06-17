@@ -54,9 +54,9 @@ body, body * {
     bottom: 20px;
 }
 .toolbar button {
-    height: 40px;
+    height: 60px;
     border: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding: 5px 15px;
 }
 .toolbar button:hover {
