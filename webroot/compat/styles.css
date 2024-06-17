@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Blender Book';
+    src: url('https://3rl.io/assets/general/fonts/Blender-Book.woff2') format('woff2'),url('https://3rl.io/assets/general/fonts/Blender-Book.woff') format('woff');
+    font-weight: 400
+}
+
+body {
+    background-color: black;
+}
+
+body, body * {
+    font-family: 'Blender Book', Fallback, sans-serif;
+    font-weight: 400;
+}
+
+.stats-panel, .top-bar, .toolbar button {
+    background-color: rgba(0, 16, 32, .6);
+    border-radius: 6px;
+    color: white;
+}
+
+.stats-panel {
+    display: inline-grid;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.stats-panel div {
+    margin: auto;
+    text-align: center;
+}
+
+.logo, .top-bar, .toolbar {
+    position: absolute;
+}
+
+.logo, .toolbar button {
+    cursor: pointer;
+}
+
+.logo {
+    z-index: 3;
+    top: 10px;
+    left: 20px;
+}
+
+.top-bar, .toolbar {
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+}
+
+.toolbar {
+    bottom: 20px;
+}
+.toolbar button {
+    height: 40px;
+    border: 0;
+    font-size: 1.5rem;
+    padding: 5px 15px;
+}
+.toolbar button:hover {
+    background-color: rgba(0, 40, 80, 1);
+}
