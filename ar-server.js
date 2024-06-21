@@ -172,9 +172,9 @@ if (args.includes('--record')) {
     setTimeout(() => {
         if (recordingTestData) {
             recordingTestData = false;
-            fs.writeFile('webroot/fps-test/data.json', JSON.stringify(testData), err => {
+            fs.writeFile('webroot/compat/data.json', JSON.stringify(testData), err => {
                 if (err) { console.error(err) } else {
-                    log('Recording saved to ./webroot/fps-test/data.json');
+                    log('Recording saved to ./webroot/compat/data.json');
                 }
             });
         }
