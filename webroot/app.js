@@ -2,6 +2,7 @@ const socket = io();
 
 Alpine.store('app', {
     roll: true,
+    pitch: true,
     sphere() {
         socket.emit('sphere');
     }
@@ -22,9 +23,11 @@ io().on('cam', function(data){
         totalCount++;
 
         if (Math.abs(newX - lastX) + Math.abs(newY - lastY) > .001) {
+            lastX = newX;
+            lastY = newY;
             cameraRotation.set(
-                lastX = newX,
-                lastY = newY,
+                store.pitch ? newX : 0,
+                newY,
                 store.roll ? data[2] : 0
             );
         } else {
