@@ -1,3 +1,14 @@
+const socket = io();
+
+Alpine.store('app', {
+    roll: true,
+    sphere() {
+        socket.emit('sphere');
+    }
+});
+const store = Alpine.store('app');
+
+
 let cameraRotation, lastX = 0, lastY = 0, skipCount = 0, totalCount = 0;
 
 io().on('cam', function(data){
@@ -11,7 +22,11 @@ io().on('cam', function(data){
         totalCount++;
 
         if (Math.abs(newX - lastX) + Math.abs(newY - lastY) > .001) {
-            cameraRotation.set(lastX = newX, lastY = newY, data[2]);
+            cameraRotation.set(
+                lastX = newX,
+                lastY = newY,
+                store.roll ? data[2] : 0
+            );
         } else {
             skipCount++;
             if (totalCount > 180) {
@@ -24,10 +39,7 @@ io().on('cam', function(data){
     }
 });
 
-
-const socket = io();
 window.headset = {};
-
 ['center', 'sphere', 'powersaver'].forEach(fn => {
     headset[fn] = data => {
         socket.emit(fn, data);

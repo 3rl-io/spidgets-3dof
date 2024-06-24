@@ -5,24 +5,30 @@
 <s-room background="transparent">
     <s-group camera scroll-swipe="headset" id="camera"></s-group>
 
-<!---
-    <s-group rotation="-2 35 0">
-        <weather-widget position="0 0 -100"></weather-widget>
+    <s-group rotation="0 45 0">
+        <weather-widget position="0 11 -100"></weather-widget>
 
-        <s-div iframe-src="widgets/econ-calendar.html" position="0 -25 -100"
+        <s-div iframe-src="widgets/econ-calendar.html" position="0 -11 -100"
             width="380" height="580" outer-class="frosted"></s-div>
     </s-group>
 
-    <s-group rotation="-2 20 0">
-        <chart-widget position="0 0 -100" width="410" height="310" interval="5"></chart-widget>
-        <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
-        <chart-widget position="0 -34 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
+    <s-group rotation="0 30 0">
+        <chart-widget position="0 17 -100" width="410" height="310" interval="5"></chart-widget>
+        <chart-widget position="0 0 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
+        <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
     </s-group>
---->
-    <s-group rotation="-2 -5 0">
-        <s-div height="900" width="1100" iframe-src="//youtube.com/feed/subscriptions?theme=dark" zoom=".8" position="0 -12 -100"></s-div>
+
+    <s-group zone="0">
+        <s-screen iframe-src="//youtube.com/feed/subscriptions?theme=dark" zoom=".8"></s-screen>
     </s-group>
 </s-room>
+
+<div class="overlay">
+    <button @click="$store.app.sphere()">
+        Center
+    </button>
+    <button @click="$store.app.roll = !$store.app.roll" x-html="$store.app.roll ? 'Roll On' : 'Roll Off'"></button>
+</div>
 
 
 <script src="vendor/spidgets-core.min.js"></script>

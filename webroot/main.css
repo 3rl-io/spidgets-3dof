@@ -47,3 +47,24 @@ body, body * {
     background-color: rgba(240,240,240,.5);
     color: rgba(255,255,255,.5);
 }
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    bottom: 10px;
+}
+.overlay button {
+    cursor: pointer;
+    height: 60px;
+    border: 0;
+    font-size: 2rem;
+    padding: 5px 15px;
+    background-color: rgba(0, 16, 32, .6);
+    border-radius: 6px;
+    color: white;
+}
+.overlay button:hover {
+    background-color: rgba(0, 40, 80, 1);
+}

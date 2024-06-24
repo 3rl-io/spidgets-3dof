@@ -74,9 +74,9 @@ Options:
 
 ## How it works
 
-1. Rust-based executable `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
+1. Rust driver `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
-2. nodejs-based process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
+2. Server-side JS process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
 
 3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
 
@@ -100,7 +100,7 @@ i.e.
 
 `{whitespace}{pitch radians}{whitespace}{yaw radians}{whitespace}{roll radians}`
 
-Printed at an interval slightly above target frame rate
+Printed at or above target refresh rate
 
 Then go to [installation](#installation). For dev support, open an issue or contact: hello@3rl.io
 
@@ -114,20 +114,13 @@ See if the euler angles from your glasses are printing to the console by running
 bin/euler_60
 ```
 
-Then get the webserver ready. Requires [nodejs](https://nodejs.org/en/download/package-manager) or [Bun](https://bun.sh/docs/installation) (Bun is newer and faster)
+Then get the webserver ready. Requires [Bun](https://bun.sh/docs/installation) (also works with node/npm)
 
 Start ar-server.js. You may need `sudo` for the second step:
 
 ```
 bun install
 bun ar-server.js
-```
-
-or (if using nodejs)
-
-```
-npm install
-node ar-server.js
 ```
 
 then browse to http://localhost:8000
