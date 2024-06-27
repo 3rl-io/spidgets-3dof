@@ -1,49 +1,84 @@
-const socket = io();
+const degToRad = Math.PI / 180,
+    socket = io();
 
 Alpine.store('app', {
     roll: true,
+    toggleRoll() {
+        this.roll = !this.roll;
+        if (!this.roll){
+            document.getElementById('recliner').object3D.rotation.set(store.pitch ? lastX : 0, 0, 0);
+            document.getElementById('room').rerender();
+        }
+    },
     pitch: true,
-    sphere() {
-        socket.emit('sphere');
+    togglePitch() {
+        this.pitch = !this.pitch;
+        if (!this.pitch){
+            document.getElementById('recliner').object3D.rotation.set(0, 0, store.roll ? lastZ : 0);
+            document.getElementById('room').rerender();
+        }
+    },
+    center() {
+        tareY = lastY;
+        document.getElementById('recliner').object3D.rotation.set(store.pitch ? lastX : 0, 0, store.roll ? lastZ : 0);
+        document.getElementById('room').rerender();
     }
 });
+
 const store = Alpine.store('app');
 
+let cameraRotation,
+    tareY = 0,
+    lastX = 0, lastY = 0, lastZ = 0;
 
-let cameraRotation, lastX = 0, lastY = 0, skipCount = 0, totalCount = 0;
 
-io().on('cam', function(data){
+function initCamera(yaw, firstConnect) {
     if (!cameraRotation) {
         let camera = document.getElementById('camera');
         cameraRotation = camera && camera.object3D && camera.object3D.rotation;
         cameraRotation && (cameraRotation.order = 'YXZ');
+        tareY = yaw;
+        window.dispatchEvent(new Event('resize'));
+    } else if (firstConnect) {
+        tareY = yaw;
     }
+}
+
+function setCamera(vecArr) {
+    const newY = vecArr[1];
+
+    initCamera(newY, vecArr[3]);
+
     if (cameraRotation) {
-        const newX = data[0], newY = data[1];
-        totalCount++;
+        const newX = vecArr[0], newZ = vecArr[2];
 
-        if (Math.abs(newX - lastX) + Math.abs(newY - lastY) > .001) {
-            lastX = newX;
-            lastY = newY;
-            cameraRotation.set(
-                store.pitch ? newX : 0,
-                newY,
-                store.roll ? data[2] : 0
-            );
-        } else {
-            skipCount++;
-            if (totalCount > 180) {
-                //TODO: inactivity/power save tracking
-                //console.log((skipCount*100/totalCount).toFixed(0));
-                totalCount = skipCount = 0;
-            }
+        lastX = newX;
+        lastY = newY;
+        lastZ = newZ;
+        cameraRotation.set(
+            store.pitch ? newX : 0,
+            newY - tareY,
+            store.roll ? newZ : 0
+        );
+    }
+}
 
-        }
+//headset IMU data was normalized on the backend before it got here
+io().on('cam', setCamera);
+
+window.addEventListener("deviceorientation", (event) => {
+    //station (e.g. android phone) IMU data is normalized here depending on the control type
+    if (event.beta !== null) {
+        //just acts like a pointer atm
+        setCamera([event.beta*degToRad, event.alpha*degToRad, 0]);
+
+        //TODO: head mounted option includes roll
+        //setCamera([event.beta*degToRad, event.alpha*degToRad, event.gamma*-degToRad])
     }
 });
 
 window.headset = {};
-['center', 'sphere', 'powersaver'].forEach(fn => {
+['powersaver'].forEach(fn => {
     headset[fn] = data => {
         socket.emit(fn, data);
     }

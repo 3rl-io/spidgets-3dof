@@ -20,40 +20,28 @@ let connected = false,
     calibrating = false,
     calStartY = 0,
     drift = 0,
-    rawX = 0, rawY = 0, rawZ = 0,
-    tareX = 0, tareY = 0, tareZ = 0,
     tareTime = Date.now(),
     powerSaver = false,
     skipFrame = false,
     recordingTestData = false,
     testData = [];
 
-function center(type) {
-    if (type === 'sphere') {
-        tareX = rawX;
-        tareZ = rawZ;
-    } else {
-        tareX = tareZ = 0;
-    }
-    tareY = rawY;
-    tareTime = Date.now();
-}
-
 io.on('connection', socket => {
-    center();
-    socket.on('center', center);
-    socket.on('sphere', () => center('sphere'));
     socket.on('powersaver', state => {powerSaver = !!state});
     socket.on('calibrate', calibrate);
 });
 
-function broadcastCam(x,y,z) {
-    !calibrating && emit('cam', [x,y,z]);
+function broadcastCam(x,y,z, firstConnect) {
+    !calibrating && emit('cam', [x,y,z, firstConnect]);
     recordingTestData && testData.push([x,y,z])
 }
 
 function _runCmd() {
-    return require('child_process').spawn('bin/euler_60', {shell: process.platform !== 'win32'});
+    let cmd = 'bin/euler_60';
+    if (process.platform === 'darwin') {
+        cmd = 'bin/euler_60_apple_silicon';
+    }
+    return require('child_process').spawn(cmd, {shell: process.platform !== 'win32'});
 }
 
 (function _respawn(spawned) {
@@ -62,13 +50,16 @@ function _runCmd() {
     });
     spawned.stdout.on('data', data => {
         const eulers = data.toString().split(/\s+/);
-        rawZ = parseFloat(eulers[1]);
+        const rawZ = parseFloat(eulers[1]);
         if (!isNaN(rawZ)) {
-            rawX = parseFloat(eulers[2]);
-            rawY = parseFloat(eulers[3]);
+            const rawX = parseFloat(eulers[2]),
+                rawY = parseFloat(eulers[3]);
+
+            let firstConnect = false;
 
             if (!connected) {
                 log('Headset connected');
+                firstConnect = true;
                 connected = true;
             }
 
@@ -80,9 +71,8 @@ function _runCmd() {
             if (skipFrame && powerSaver) {return}
 
             const totalDrift = (Date.now() - tareTime) * drift;
-            broadcastCam(rawX-tareX, tareY + totalDrift - rawY, tareZ - rawZ);
+            broadcastCam(rawX, totalDrift - rawY, -rawZ, firstConnect);
         } else {
-            rawX = rawY = rawZ = 0;
             broadcastCam(0, 0, 0);
         }
     });
