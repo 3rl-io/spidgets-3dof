@@ -66,14 +66,24 @@ function setCamera(vecArr) {
 //headset IMU data was normalized on the backend before it got here
 io().on('cam', setCamera);
 
+const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+
 window.addEventListener("deviceorientation", (event) => {
     //station (e.g. android phone) IMU data is normalized here depending on the control type
     if (event.beta !== null) {
-        //just acts like a pointer atm
-        setCamera([event.beta*degToRad, event.alpha*degToRad, 0]);
+        if (isAndroid) {
+            //just acts like a pointer at the moment
+            setCamera([event.beta * degToRad, event.alpha * degToRad, 0]);
 
-        //TODO: head mounted option includes roll
-        //setCamera([event.beta*degToRad, event.alpha*degToRad, event.gamma*-degToRad])
+            //TODO: head mounted option including roll
+            //setCamera([event.beta*degToRad, event.alpha*degToRad, event.gamma*-degToRad])
+        } else {
+            //TODO: some laptops also detect motion (usually at a low polling rate).
+            // Combined with headset 3DoF, the laptop (or other computer) could be a body anchor that moves the workspace while the user is walking and turning
+            // This can be a really useful feature/alternative to 6DoF that isn't currently offered by other software
+
+            //TODO: iOS, iPadOS can go here when AirPlay is easier to use
+        }
     }
 });
 
