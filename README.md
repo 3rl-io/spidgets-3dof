@@ -2,7 +2,7 @@
 
 Example app and hardware drivers for AR in a web browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's HTML library
 
-<a href="https://3rl.io/compat/" target="_blank">Live Demo with Test Motion Data</a>
+<a href="https://3rl.io/compat/" target="_blank">Live Demo</a>
 
 <img src="https://github.com/3rl-io/spidgets-3dof/blob/master/docs/readme-assets/3dof.gif?raw=true" alt="spidgets-3dof gif" width="700"/>
 
@@ -18,17 +18,18 @@ Example app and hardware drivers for AR in a web browser with 3 degrees of freed
 ## System requirements
 
 ### Compatibility
-|                                        | Windows | MacOS | Linux |
-|----------------------------------------|---------|-------|-------|
-| Rokid Air, Max                         | ✅     | ✅   | ✅   |
-| XREAL Light, Air, Air 2, and Air 2 Pro | ❌      | ✅   | ✅   |
+|                                        | Windows | MacOS | Linux | Android* (e.g. Samsung DeX) |
+|----------------------------------------|---------|-------|-------|-----------------------------|
+| Rokid Air, Max                         | ✅     | ✅   | ✅   | ✅                           |
+| XREAL Light, Air, Air 2, and Air 2 Pro | ❌      | ✅   | ✅   | ✅                           |
+| Viture, RayNeo Nxtwear, Air 2          | ❌      | ❌   | ❌   | ✅                           |
+
+*Experimental Android setup uses the IMU in the phone, so 3DoF control would be a handheld pointer, or a headset that secures the phone to your head (in which case you would need a bluetooth mouse for pointing).
 
 - [Setup for new hardware (BYOD)](#student-researcher-and-oem-info)
 
 ---
 ## Installation
-
-x86 Windows and Linux can use the included binaries as shown in this section. **ARM and MacOS should skip to the [manual build](#manual-build)**
 
 ### Linux
 
@@ -50,8 +51,18 @@ Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?ta
 
 3. Run `bin/ar-server` and wait for [calibration](#calibration) (first time setup)
 
+
+### MacOS
+
+Skip to the [manual build](#manual-build)
+
+### Android
+
+Android doesn't require installation, but will need [remote debugging](https://developer.chrome.com/docs/devtools/remote-debugging/) to experiment with the UI code.
+
+
 ---
-Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk.
+Optional: Some third party websites (e.g. YouTube) need [this extension](https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe) in order to bypass restrictions caused by iframe headers. This may violate third party TOS or void warranties. Use at your own risk. On Android, extensions seem to only be available with Kiwi or Yandex browsers.
 
 Soon: When stable, we can host an easier download/install process on a CDN + option to run in background on startup
 
@@ -74,11 +85,17 @@ Options:
 
 ## How it works
 
+### ... with headset IMU driver (Windows, Linux, MacOS)
+
 1. Rust driver `euler_60` reads the raw sensor data from the glasses and outputs euler angles (i.e. roll, pitch, and yaw) at 60Hz. [Source](https://github.com/3rl-io/headset-utils)
 
 2. Server-side JS process `ar-server` manages the connection, corrects for yaw drift, and exposes the euler angles on a socket.io connection. Also exposes functions like re-centering and power save mode
 
-3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
+3. Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) listens to the websocket and uses `spidgets-core` to position the widgets and convert euler angles to matrix3d calculations to simulate 3D space
+
+### ... on Android
+
+Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/master/webroot/index.html) uses `spidgets-core` to position the widgets and convert `deviceorientation` events in the browser to matrix3d calculations to simulate 3D space
 
 ---
 ## Student, Researcher, and OEM Info
@@ -108,11 +125,21 @@ Then go to [installation](#installation). For dev support, open an issue or cont
 
 ## Manual Build
 
-See if the euler angles from your glasses are printing to the console by running the below command. If not, build [headset-utils](https://github.com/3rl-io/headset-utils) and copy the new euler_60 binary to the same location.
+Windows, Linux: see if the euler angles from your glasses are printing to the console by running the below command. If not, build [headset-utils](https://github.com/3rl-io/headset-utils) and copy the new euler_60 binary to the same location.
 
 ```
 bin/euler_60
 ```
+
+MacOS do the same with this instead:
+
+```
+bin/euler_60_apple_silicon
+```
+
+Android doesn't need euler_60.
+
+---
 
 Then get the webserver ready. Requires [Bun](https://bun.sh/docs/installation) (also works with node/npm)
 

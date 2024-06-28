@@ -2,33 +2,35 @@
 <script src="vendor/alpinejs.min.js"></script>
 <script src="app.js"></script>
 
-<s-room background="transparent">
+<s-room background="transparent" id="room">
     <s-group camera scroll-swipe="headset" id="camera"></s-group>
 
-    <s-group rotation="0 45 0">
-        <weather-widget position="0 11 -100"></weather-widget>
+    <s-group id="recliner">
+        <s-group rotation="0 45 0">
+            <weather-widget position="0 11 -100"></weather-widget>
 
-        <s-div iframe-src="widgets/econ-calendar.html" position="0 -11 -100"
-            width="380" height="580" outer-class="frosted"></s-div>
-    </s-group>
+            <s-div iframe-src="widgets/econ-calendar.html" position="0 -11 -100"
+                   width="380" height="580" outer-class="frosted"></s-div>
+        </s-group>
 
-    <s-group rotation="0 30 0">
-        <chart-widget position="0 17 -100" width="410" height="310" interval="5"></chart-widget>
-        <chart-widget position="0 0 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
-        <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
-    </s-group>
+        <s-group rotation="0 30 0">
+            <chart-widget position="0 17 -100" width="410" height="310" interval="5"></chart-widget>
+            <chart-widget position="0 0 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
+            <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
+        </s-group>
 
-    <s-group zone="0">
-        <s-screen iframe-src="//youtube.com/feed/subscriptions?theme=dark" zoom=".8"></s-screen>
+        <s-group zone="0">
+            <s-screen iframe-src="//youtube.com/feed/subscriptions?theme=dark" zoom=".8"></s-screen>
+        </s-group>
     </s-group>
 </s-room>
 
 <div class="overlay">
-    <button @click="$store.app.sphere()">
+    <button @click="$store.app.center()">
         Center
     </button>
-    <button @click="$store.app.roll = !$store.app.roll" x-html="$store.app.roll ? 'Roll On' : 'Roll Off'"></button>
-    <button @click="$store.app.pitch = !$store.app.pitch" x-html="$store.app.pitch ? 'Pitch On' : 'Pitch Off'"></button>
+    <button @click="$store.app.toggleRoll()" x-html="$store.app.roll ? 'Roll On' : 'Roll Off'"></button>
+    <button @click="$store.app.togglePitch()" x-html="$store.app.pitch ? 'Pitch On' : 'Pitch Off'"></button>
 </div>
 
 
