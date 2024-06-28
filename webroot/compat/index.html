@@ -1,5 +1,4 @@
 <title>AR-in-a-browser compatibility test | 3RL.io</title>
-
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <script src="app.js"></script>
 
@@ -8,28 +7,28 @@
 </div>
 
 <div class="top-bar">
-    <h1>AR-in-a-browser compatibility test: 10s loop of pre-recorded motion data, real-time 3DoF rendering</h1>
+    <h1 x-html="$store.app.android ? '**DEMO**' : 'AR-in-a-browser compatibility test: 10s loop of pre-recorded motion data, real-time 3DoF rendering'"></h1>
 </div>
 
 <s-room background="transparent">
     <s-group camera scroll-swipe="headset" id="camera"></s-group>
 
-    <template x-if="store.stressLoaded">
+    <template x-if="$store.app.stressLoaded">
         <s-group :visible="$store.app.stress">
-            <s-group rotation="-2 25 0">
+            <s-group rotation="0 25 0">
                 <weather-widget position="0 0 -100"></weather-widget>
 
                 <s-div iframe-src="https://3rl.io/surf/widgets/econ-calendar.html" position="0 -25 -100"
                        width="380" height="580" outer-class="frosted"></s-div>
             </s-group>
 
-            <s-group rotation="-2 10 0">
+            <s-group rotation="0 10 0">
                 <chart-widget position="0 0 -100" width="410" height="310" interval="5"></chart-widget>
                 <chart-widget position="0 -17 -100" width="410" height="310" interval="5" symbol="NVDA"></chart-widget>
                 <chart-widget position="0 -34 -100" width="410" height="310" interval="5" symbol="TSLA"></chart-widget>
             </s-group>
 
-            <s-group rotation="-2 -25 0">
+            <s-group rotation="0 -25 0">
                 <s-div height="630" width="1120" iframe-src="//www.youtube.com/embed/AY5qcIq5u2g" zoom=".8" position="0 -12 -100"></s-div>
             </s-group>
         </s-group>
@@ -52,7 +51,8 @@
 </s-room>
 
 <div class="toolbar">
-    <button @click="$store.app.playing = !$store.app.playing" x-html="($store.app.playing ? 'Pause' : 'Play') + ' Motion'"></button>
+    <button @click="$store.app.playing = !$store.app.playing" x-html="($store.app.playing ? 'Pause' : 'Play') + ' Motion'" x-show="!$store.app.android"></button>
+    <button @click="$store.app.center()" x-show="$store.app.android">Center</button>
     <button @click="$store.app.stress = $store.app.stress ? 0 : 1; $store.app.stressLoaded = true">
         Toggle widgets (stress test)
     </button>
