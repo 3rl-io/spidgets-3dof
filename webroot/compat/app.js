@@ -1,4 +1,4 @@
-const platform = navigator.userAgentData?.platform || navigator?.platform;
+const platform = navigator?.platform || navigator.userAgentData?.platform;
 
 Alpine.store('app', {
     fps: '&nbsp;',
