@@ -66,7 +66,7 @@ function setCamera(vecArr) {
 //headset IMU data was normalized on the backend before it got here
 io().on('cam', setCamera);
 
-const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+const isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1) || (platform.includes('Linux a'));
 
 window.addEventListener("deviceorientation", (event) => {
     //station (e.g. android phone) IMU data is normalized here depending on the control type

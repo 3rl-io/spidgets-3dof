@@ -19,6 +19,7 @@ function log(msg){
 let connected = false,
     calibrating = false,
     calStartY = 0,
+    rawY = 0,
     drift = 0,
     tareTime = Date.now(),
     powerSaver = false,
@@ -52,8 +53,8 @@ function _runCmd() {
         const eulers = data.toString().split(/\s+/);
         const rawZ = parseFloat(eulers[1]);
         if (!isNaN(rawZ)) {
-            const rawX = parseFloat(eulers[2]),
-                rawY = parseFloat(eulers[3]);
+            const rawX = parseFloat(eulers[2]);
+            rawY = parseFloat(eulers[3]);
 
             let firstConnect = false;
 

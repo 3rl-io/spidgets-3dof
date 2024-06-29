@@ -1,6 +1,6 @@
 # spidgets-3dof
 
-Example app and hardware drivers for AR in a web browser with 3 degrees of freedom and/or SBS depth. Build next-gen HUDs using 3RL's HTML library
+Example app and hardware integrations for AR in a web browser with 3 degrees of freedom
 
 <a href="https://3rl.io/compat/" target="_blank">Live Demo</a>
 
@@ -45,7 +45,7 @@ Optional: Follow the udev step [here](https://github.com/3rl-io/headset-utils?ta
 
 ### Windows
 
-1. Clone this repo and open it in a terminal
+1. Clone this repo and open it in a powershell terminal
 
 2. Place the headset upright on a flat surface
 

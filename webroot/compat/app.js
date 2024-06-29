@@ -1,3 +1,5 @@
+const platform = navigator.userAgentData?.platform || navigator?.platform;
+
 Alpine.store('app', {
     fps: '&nbsp;',
     color: 'white',
@@ -7,7 +9,7 @@ Alpine.store('app', {
     stressLoaded: false,
     stress: 0,
     playing: true,
-    android: navigator.userAgent.toLowerCase().indexOf("android") > -1,
+    android: (navigator.userAgent.toLowerCase().indexOf("android") > -1) || (platform.includes('Linux a')),
     open(url) {
         window.open(url, '_blank')
     },
@@ -18,25 +20,18 @@ Alpine.store('app', {
 });
 const store = Alpine.store('app');
 
-let platform = navigator.userAgentData?.platform || navigator?.platform;
-
-if (platform.includes('Win')) {
+if (store.android) {
+    store.os = 'Android'
+    store.compatWith = 'All headsets';
+} else if (platform.includes('Win')) {
     store.os = 'Windows'
     store.compatWith = 'Rokid';
 } else if (platform.includes('Linux')) {
-    if (store.android) {
-        store.os = 'Android'
-        store.compatWith = 'All headsets';
-    } else {
-        store.os = 'Linux';
-        store.compatWith = 'Rokid, XREAL'
-    }
+    store.os = 'Linux';
+    store.compatWith = 'Rokid, XREAL'
 } else if (platform.includes('Mac')) {
     store.os = 'MacOS'
     store.compatWith = 'Rokid, XREAL'
-} else if (platform.includes('Android')) {
-    store.os = 'Android'
-    store.compatWith = 'All headsets';
 } else {
     store.os = 'Unsupported'
     store.compatWith = 'Unsupported';
