@@ -24,9 +24,9 @@ Example app and hardware integrations for AR in a web browser with 3 degrees of 
 | XREAL Light, Air, Air 2, and Air 2 Pro | ❌      | ✅   | ✅   | ✅                           |
 | Viture, RayNeo Nxtwear, Air 2          | ❌      | ❌   | ❌   | ✅                           |
 
-*Experimental Android setup uses the IMU in the phone, so 3DoF control would be a handheld pointer, or a headset that secures the phone to your head (in which case you would need a bluetooth mouse for pointing).
+*Experimental Android setup uses the device's integrated IMU instead of headset drivers, and therefore doesn't require installation. If your use case is mobile-only, see [spidgets-mobile](https://github.com/3rl-io/spidgets-mobile) for a simpler repo and instructions for Termux.
 
-- [Setup for new hardware (BYOD)](#student-researcher-and-oem-info)
+[Setting up new drivers](#student-researcher-and-oem-info)
 
 ---
 ## Installation
@@ -58,7 +58,7 @@ Skip to the [manual build](#manual-build)
 
 ### Android
 
-Android doesn't require installation, but will need [remote debugging](https://developer.chrome.com/docs/devtools/remote-debugging/) to experiment with the UI code.
+Android skip to the webserver step in the [manual build](#manual-build). 
 
 
 ---
@@ -100,7 +100,7 @@ Front-end in [webroot/index.html](https://github.com/3rl-io/spidgets-3dof/blob/m
 ---
 ## Student, Researcher, and OEM Info
 
-Easily connect your own hardware to spidgets by replacing `bin/euler_60` driver with your own stdout program binary
+Connect new IMU devices by replacing `bin/euler_60` driver with your own stdout program binary
 
 Expected format:
 
@@ -141,7 +141,7 @@ Android doesn't need euler_60.
 
 ---
 
-Then get the webserver ready. Requires [Bun](https://bun.sh/docs/installation) (also works with node/npm)
+Then get the webserver ready. Requires [Bun](https://bun.sh/docs/installation) or [NodeJS](https://nodejs.org/en/download/package-manager)
 
 Start ar-server.js. You may need `sudo` for the second step:
 
